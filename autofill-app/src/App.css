@@ -1,0 +1,46 @@
+.Suggestions,input,button 
+{
+  font-size:15px;
+  height: auto;
+}
+.Suggestions
+{
+  list-style-type: none;
+}
+.Suggestions option{
+  display:block;
+  border:0.5px solid black;
+  width: 170px;
+
+}
+input
+{
+  border:0.5px solid black;
+  text-decoration: none;
+  width: 170px;
+  font-size: 15px;
+  border-radius: 0;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+button
+{
+  margin-left:5px;
+  background-color: rgb(29, 98, 126);
+  border:0.5px solid rgb(9, 65, 114);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  cursor:pointer;
+}
+button:hover
+{
+  background-color: rgb(35, 151, 197);
+}
+button:active
+{
+  background-color: rgb(15, 170, 231);
+}
+input:focus
+{
+  background-color: rgb(177, 233, 255);
+}
