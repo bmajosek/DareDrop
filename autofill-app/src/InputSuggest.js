@@ -51,4 +51,4 @@ function Component() {
   );
 }
 
-export default Component;
+export default InputSuggest;
