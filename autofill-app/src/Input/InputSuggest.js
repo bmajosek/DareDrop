@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './Input.css'
-function Component() {
-  const [Userinfo,setUserinfo] = useState([]);
+function InputSuggest() {
   const [Suggests,setSuggests] = useState([]);
   const [Show,setShow] = useState(false);
-  const [Users,setUsers] = useState([]);
+  const [Userinfo,setUserinfo] = useState([]);
+  let Users = [];
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(resp => {
@@ -13,42 +13,46 @@ function Component() {
       throw resp;
     })
     .then(resp => {
-      setUserinfo(...Userinfo,resp);
+       setUserinfo(resp);
     })
     .catch(err => {
       console.log(err);
     })
-  },[]);
-  Userinfo.forEach(element => {
-    setUsers(...Users,element);
-  }) 
-  const Change = (e) => {
-    let temp = [];
-    let type = e.target.value;
-    if(type)
-    {
-      temp = users.filter(element => {
-        return element.toLowerCase().indexOf(type.toLowerCase()) === 0;
-      })
-      setShow(true);
-      setSuggests(temp);
+    });
+    Userinfo.forEach(element => {
+        Users.push(element.username);
+    })
+    const Change = (e) => {
+        let temp = [];
+        let type = e.target.value;
+        if(type)
+        {
+        temp = Users.filter(element => {
+            return element.toLowerCase().indexOf(type.toLowerCase()) === 0;
+        })
+        setShow(true);
+        setSuggests(temp);
+        }
     }
-  }
-  const KeyDown = (e) => {
-    setShow(false);
-    setSuggests([]);
-  }
-  return (
+    const KeyDown = (e) => {
+        setShow(false);
+        setSuggests([]);
+    }
+    const Changeactive = (e) => {
+        document.getElementById("autofiller").value = e.target.value;
+        setShow(false);
+    }
+    return (
     <div>
-      <input type="text" id="autofiller" placeholder="input username" onChange= {Change} onKeyDown= {KeyDown}/>
+      <input type="text" id="autofiller" placeholder="input username" autoComplete="off" onChange={Change} onKeyDown={KeyDown} onFocus={Change}/>
       <button>Submit</button>
-      <datalist className="Suggestions" style= {{display: show ? 'block' : 'none'}}> 
+      <datalist className="Suggestions" style= {{display: Show ? 'block' : 'none'}}> 
           {Suggests.map((element,i) => {
-            return <option key= {i}> {element} </option>
+            return <option key = {i} id ="options" onClick={Changeactive}> {element} </option>
           })}
       </datalist>
     </div>
-  );
+    );
 }
 
 export default InputSuggest;
