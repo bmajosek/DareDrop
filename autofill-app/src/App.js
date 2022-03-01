@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 function App() {
-  const [tab,settab] = useState([]);
-  const [suggest,setsuggest] = useState([]);
-  const [show,setshow] = useState(false);
-  let type;
-  let users = [];
-  let temp = [];
+  const [Userinfo,setUserinfo] = useState([]);
+  const [Suggests,setSuggests] = useState([]);
+  const [Show,setShow] = useState(false);
+  const [Users,setUsers] = useState([]);
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(resp=>{
@@ -15,36 +13,37 @@ function App() {
       throw resp;
     })
     .then(resp => {
-      settab(resp);
+      setUserinfo(...Userinfo,resp);
     })
     .catch(err=> {
       console.log(err);
     })
   },[]);
-  tab.forEach(element => {
-    users.push(element.username);
+  Userinfo.forEach(element => {
+    setUsers(...Users,element);
   }) 
   const Change = (e) => {
-    type = e.target.value;
+    let temp = [];
+    let type = e.target.value;
     if(type)
     {
       temp = users.filter(element => {
         return element.toLowerCase().indexOf(type.toLowerCase()) === 0;
       })
-      setshow(true);
-      setsuggest(temp);
+      setShow(true);
+      setSuggests(temp);
     }
   }
   const KeyDown = (e) => {
-    setshow(false);
-    setsuggest([]);
+    setShow(false);
+    setSuggests([]);
   }
   return (
     <div>
       <input type="text" id="autofiller" placeholder="input username" onChange= {Change} onKeyDown= {KeyDown}/>
       <button>Submit</button>
       <datalist className="Suggestions" style= {{display: show ? 'block' : 'none'}}> 
-          {suggest.map((element,i) => {
+          {Suggests.map((element,i) => {
             return <option key= {i}> {element} </option>
           })}
       </datalist>
