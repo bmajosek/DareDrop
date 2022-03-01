@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import InputSuggest from './Input.js'
+import InputSuggest from './InputSuggest.js'
 function App() {
   return (
     <div>
